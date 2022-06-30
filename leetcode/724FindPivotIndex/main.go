@@ -2,32 +2,35 @@ package main
 
 import "fmt"
 
-//Print every number from 1 to 10,000
-
 func main() {
-	var input = []int{1, 2, 3, 17, 50}
-	answer := runningSum(input)
-	fmt.Printf("[")
-	for _, str := range answer {
-		fmt.Printf("%d ", str)
-	}
-	fmt.Printf("]")
+	//var input = []int{1, 7, 3, 6, 5, 6}
+	//var input = []int{1, 2, 3}
+	var input = []int{2, 1, -1}
+	answer := pivotIndex(input)
+	fmt.Println(answer)
 }
-
-func runningSum(nums []int) []int {
-	//declare an output[] with the same length as nums
-	//using length of nums more than once so store in a variable
+func pivotIndex(nums []int) int {
 	size := len(nums)
-
-	output := make([]int, size)
-
-	//declare an int variable to store the runningSum. initialise as 0
-	var iterativeSum int = 0
-
-	//iterate through nums[]; iterativeSum +=current value
+	ans := -1
 	for i := 0; i < size; i++ {
-		iterativeSum += nums[i]
-		output[i] = iterativeSum
+		left := 0
+		right := 0
+
+		for j := i; j > 0; j-- {
+			left += nums[j-1]
+		}
+		for k := i; k < size-1; k++ {
+			right += nums[k+1]
+		}
+		fmt.Printf("%v iteration. Left: %v Right: %v\n", i, left, right)
+		//fmt.Printf("%v iteration. Left: %v\n", i, left)
+		//fmt.Printf("%v iteration. Right: %v\n", i, right)
+
+		if left == right {
+			ans = i
+			break
+		}
+
 	}
-	return output
+	return ans
 }
