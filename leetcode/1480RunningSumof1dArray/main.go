@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-//Print every number from 1 to 10,000
-
 func main() {
 	var input = []int{1, 2, 3, 17, 50}
 	answer := runningSum(input)
