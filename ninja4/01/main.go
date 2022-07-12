@@ -18,11 +18,4 @@ func main() {
 	}
 
 	fmt.Printf("%T", intArr)
-
-	// intArr[0] = 1
-	// intArr[1] = 2
-	// intArr[2] = 3
-	// intArr[3] = 4
-	// intArr[4] = 5
-
 }
