@@ -7,13 +7,6 @@ func Distance(a, b string) (int, error) {
 	alen := len(a)
 	blen := len(b)
 
-	// switch {
-	// case a == b && b == "":
-	// 	return 0, errors.New("empty strands")
-	// case :
-
-	// }
-
 	if alen == blen {
 		sum := 0
 		for i := 0; i < alen; i++ {
