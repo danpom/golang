@@ -17,9 +17,9 @@ func (b Board) printBoard() {
 
 }
 
-func (b Board) resetBoard() Board {
-	fmt.Println("printing board at start of function")
-	b.printBoard()
+func (b *Board) resetBoard() {
+	//fmt.Println("printing board at start of function")
+	//b.printBoard()
 	b.board = [8][8]int{
 		{8, 9, 10, 11, 12, 10, 9, 8},
 		{7, 7, 7, 7, 7, 7, 7, 7},
@@ -28,29 +28,31 @@ func (b Board) resetBoard() Board {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{1, 1, 1, 1, 1, 1, 1, 1},
-		{2, 3, 4, 5, 6, 4, 3, 2},
-	}
-	fmt.Println("printing board at end of function")
-	b.printBoard()
-	return b
+		{2, 3, 4, 5, 6, 4, 3, 2}}
+	//fmt.Println("printing board at end of function")
+	//b.printBoard()
 
 }
 
 func main() {
 
 	var board1 Board
-	board1.board = [8][8]int{
-		{8, 9, 10, 11, 12, 10, 9, 8},
-		{7, 7, 7, 7, 7, 7, 7, 7},
-		{0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0},
-		{1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 4, 3, 2},
-	}
-
+	//board1.printBoard()
 	board1.resetBoard()
+
+	// board1.board = [8][8]int{
+	// 	{8, 9, 10, 11, 12, 10, 9, 8},
+	// 	{7, 7, 7, 7, 7, 7, 7, 7},
+	// 	{0, 0, 0, 0, 0, 0, 0, 0},
+	// 	{0, 0, 0, 0, 0, 0, 0, 0},
+	// 	{0, 0, 0, 0, 0, 0, 0, 0},
+	// 	{0, 0, 0, 0, 0, 0, 0, 0},
+	// 	{1, 1, 1, 1, 1, 1, 1, 1},
+	// 	{2, 3, 4, 5, 6, 4, 3, 2}}
+	//print the board
+
+	fmt.Println("printing board at end of main")
+	board1.printBoard()
 
 	/*pieces := map[int]string{
 		0: "empty"
@@ -68,10 +70,6 @@ func main() {
 		12: "king(b)",
 	}*/
 
-	//print the board
-
-	fmt.Println("printing board at end of main")
-	board1.printBoard()
 	//resetBoard()
 
 }
