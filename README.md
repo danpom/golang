@@ -16,4 +16,4 @@ Home to golang code, from exercises to personal projects
     
 4. [leetcode](https://github.com/danpom/golang/tree/main/leetcode)
 
-   Solutions to leetcode exercises. Not many of these completed so far as I went with exercism instead
+   Solutions to leetcode exercises. Not many of these completed so far as I decided to progress with exercism instead
