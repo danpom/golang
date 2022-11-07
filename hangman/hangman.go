@@ -3,11 +3,16 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"math/rand"
+	"net/http"
 	"os"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
+	"unicode"
 )
 
 type gameState struct {
@@ -55,6 +60,48 @@ var pics = [7]string{"  +---+\n  |   |\n      |\n      |\n      |\n      |\n====
 	"  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n=========",
 }
 
+//IsLetter returns true if the string contains only letters (from a-z or A-Z)  and spaces. (note not using unicode.IsLetter as that includes letters with accents e.g. "ô" which may make hangman more difficult)
+var IsLetter = regexp.MustCompile(`^[a-zA-Z ]+$`).MatchString
+
+//getMovies returns an array of movies from IMDB's top 250 movies of all time. Movies with numbers, accented characters or special characters are removed from the list.
+func getMovies() []string {
+	resp, err := http.Get("https://www.imdb.com/chart/top")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	// pulling all movies from the downlaoded webpage
+	re := regexp.MustCompile(`alt=("(.*?)")`)
+	tempMovies := re.FindAllString(string(body), -1)
+
+	var movies []string
+	//removing alt tag, deleting empty strings and removing double quotes
+	for _, v := range tempMovies {
+		movie := strings.Split(v, "=")[1]
+		movie = movie[1 : len(movie)-1]
+
+		//excluding any movie that uses anything other than spaces and letters
+
+		if IsLetter(movie) {
+			movies = append(movies, strings.ToLower(movie))
+		}
+
+	}
+	return movies
+}
+
+var movies = getMovies()
+
+/*
+removing dictionary of movies in favour of getMovies method
 var movies = []string{
 	"the godfather",
 	"the shawshank redemption",
@@ -73,23 +120,9 @@ var movies = []string{
 	"west side story",
 	"star wars",
 }
-
-/*
-going with a different implementation so  letterIndex method not needed anymore and need a new method to find letters in phrase
-//map to store the indexes of letters in a phrase
-type letterIndex map[rune][]int
-
-//given a string, letterIndexes returns a letterIndex map
-func letterIndexes(p string) letterIndex {
-	m := letterIndex{}
-	for i, r := range p {
-		m[r] = append(m[r], i)
-	}
-	return m
-}
 */
 
-//given a string, letters returns a slice of rune consosting of the letters from the string
+//given a string, letters returns a slice of rune consisting of the letters from the string
 func letters(s string) []rune {
 	r := []rune(s)
 	if len(s) < 1 {
@@ -149,21 +182,18 @@ func main() {
 		input := bufio.NewScanner(os.Stdin)
 		input.Scan()
 		guess := strings.ToLower(input.Text())
-
-		//!!todo check if input is one just one character and a valid letter e.g. a-z
+		guessRune := []rune(guess)[0]
+		//check if input is just one character and a valid letter e.g. a-z
 		switch {
 		case len(guess) != 1:
-			fmt.Println("Sorry, your guess must be a single character. Try again.")
+			fmt.Println("Sorry, your guess must be a single letter character. Try again.")
+		case !unicode.IsLetter(guessRune):
+			fmt.Println("Sorry, your guess must be a letter. No other symbols allowed. Try again.")
 		default:
-			//converting the first character of the users input string to a rune (should only be one character)
-			guessRune := []rune(guess)[0]
-			//fmt.Println("your guesses: ", guessRune)
 
 			//have they guessed this already?
-
 			if contains(append(gs.incorrectGuesses, gs.correctGuesses...), guessRune) {
 				fmt.Printf("Already guessed %q, please try again\n", guess)
-				//fmt.Println("Your guesses: ", append(gs.incorrectGuesses, gs.correctGuesses...))
 			} else {
 				//is it correct?
 				if contains(gs.letters, guessRune) {
