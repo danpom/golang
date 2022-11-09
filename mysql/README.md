@@ -1,0 +1,1 @@
+Following the tutorial here to get the basics of how Go interacts with SQL
