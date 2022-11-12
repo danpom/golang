@@ -18,29 +18,34 @@ func Frequency(s string) FreqMap {
 // ConcurrentFrequency counts the frequency of each rune in the given strings,
 // by making use of concurrency.
 func ConcurrentFrequency(l []string) FreqMap {
-	res := make(FreqMap)
-	ch := make(chan FreqMap, 10)
+	result := make(FreqMap)
+	num := len(l)
+	ch := make(chan FreqMap, num)
+
 	var wg sync.WaitGroup
 
-	wg.Add(len(l))
+	wg.Add(num)
 
+	//spawn a goroutine to check the frequency of each rune in each text of l
 	for _, text := range l {
-		go func(t string) {
-			ch <- Frequency(t)
+		go func(s string) {
+			ch <- Frequency(s)
 			wg.Done()
 		}(text)
 	}
 
+	//wait for go routines to finish then close the channel
 	go func() {
 		wg.Wait()
 		close(ch)
 	}()
 
+	//combine frequency from each channel
 	for freqmap := range ch {
 		for letter, freq := range freqmap {
-			res[letter] += freq
+			result[letter] += freq
 		}
 	}
 
-	return res
+	return result
 }
