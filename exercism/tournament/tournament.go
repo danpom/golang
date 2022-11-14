@@ -68,7 +68,7 @@ func Tally(reader io.Reader, writer io.Writer) error {
 
 		teamsScore := strings.Split(l, ";")
 		if len(teamsScore) != 3 {
-			return fmt.Errorf("wring line format: %s (has %d fields)", l, len(teamsScore))
+			return fmt.Errorf("wrong line format: %s (has %d fields)", l, len(teamsScore))
 		}
 		t1, t2, result := teamsScore[0], teamsScore[1], teamsScore[2]
 
