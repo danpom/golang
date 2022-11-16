@@ -1,28 +1,37 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package triangle should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+/*Package triangle is used to determine the kind of triangle (equilateral, isosceles or scalene) given the length of its' 3 sides
+ */
 package triangle
 
+import "sort"
 
-// Notice KindFromSides() returns this type. Pick a suitable data type.
-type Kind
+// indicates the kind of triangle we're dealing with e.g. equilateral, isosceles or scalene
+type Kind int
 
 const (
-    // Pick values for the following identifiers used by the test program.
-    NaT // not a triangle
-    Equ // equilateral
-    Iso // isosceles
-    Sca // scalene
+	NaT Kind = iota // not a triangle
+	Equ             // equilateral
+	Iso             // isosceles
+	Sca             // scalene
 )
 
-// KindFromSides should have a comment documenting it.
+// KindFromSides() determines the kind of triangle (equilateral, isosceles or scalene) given the length of its' 3 sides
 func KindFromSides(a, b, c float64) Kind {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	var k Kind
-	return k
+	//side labels are arbritrary. Need to organise by length
+	sides := []float64{a, b, c}
+	sort.Float64s(sides)
+
+	switch {
+	case sides[2] >= sides[0]+sides[1]:
+		return NaT
+	case sides[0] <= 0:
+		return NaT
+	case sides[0] == sides[2]:
+		return Equ
+	case sides[1] == sides[2]:
+		return Iso
+	case sides[0] != sides[1]:
+		return Sca
+	default:
+		return NaT
+	}
 }
