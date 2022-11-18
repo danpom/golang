@@ -19,6 +19,10 @@ Home to golang code, from exercises to personal projects
 4. [udemy-learn-go](https://github.com/danpom/golang/tree/main/udemy-learn-go)
 
 	Solutions to the end of section exercises in Todd McLeod's Udemy course ["Learn How To Code: Google's Go (golang) Programming Language"](https://www.udemy.com/course/learn-how-to-code/). The course calls these "ninja levels"
+	
+5. [Tutorials](https://github.com/danpom/golang/tree/main/tutorials)
+	
+	These are tutorials I have followed to broaden my understanding of Golang and familiarise myself with key concepts
 
 5. [leetcode](https://github.com/danpom/golang/tree/main/leetcode)
 
