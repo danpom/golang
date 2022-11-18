@@ -1,15 +1,48 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
+/*
+Bob is a lackadaisical teenager. In conversation, his responses are very limited.
 
-// Package bob should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+Bob answers 'Sure.' if you ask him a question, such as "How are you?".
+
+He answers 'Whoa, chill out!' if you YELL AT HIM (in all capitals).
+
+He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying anything.
+
+He answers 'Whatever.' to anything else.
+
+Bob's conversational partner is a purist when it comes to written communication and always follows normal rules regarding sentence punctuation in English.
+*/
 package bob
 
-// Hey should have a comment documenting it.
+import (
+	"strings"
+	"unicode"
+)
+
+//Hey responds with a lackadaisic teenagager response from Bob
 func Hey(remark string) string {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	return ""
+	remark = strings.TrimSpace(remark)
+
+	//checking if remark contains letters as only letters can be allcaps
+	cl := false
+	for _, c := range remark {
+		if unicode.IsLetter(c) {
+			cl = true
+		}
+	}
+
+	switch {
+	case remark == "": //remarks is ""
+		return "Fine. Be that way!"
+	case cl && remark == strings.ToUpper(remark) && string(remark[len(remark)-1]) == "?": //all caps question
+		return "Calm down, I know what I'm doing!"
+	case string(remark[len(remark)-1]) == "?": //remarks ends in "?"
+		return "Sure."
+	case cl && remark == strings.ToUpper(remark): //remarks is all caps
+		return "Whoa, chill out!"
+	default:
+		return "Whatever."
+	}
+
 }
