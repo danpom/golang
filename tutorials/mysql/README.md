@@ -1,1 +1,1 @@
-Following the tutorial here to get the basics of how Go interacts with SQL
+Following the tutorial here https://go.dev/doc/tutorial/database-access to get the basics of how Go interacts with SQL
