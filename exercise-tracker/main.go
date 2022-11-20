@@ -33,11 +33,12 @@ func main() {
 
 	// Capture connection properties.
 	cfg := mysql.Config{
-		User:   os.Getenv("DBUSER"),
-		Passwd: os.Getenv("DBPASS"),
-		Net:    "tcp",
-		Addr:   "127.0.0.1:3306",
-		DBName: "et",
+		User:      os.Getenv("DBUSER"),
+		Passwd:    os.Getenv("DBPASS"),
+		Net:       "tcp",
+		Addr:      "127.0.0.1:3306",
+		DBName:    "et",
+		ParseTime: true,
 	}
 	// Get a database handle.
 	var err error
@@ -58,25 +59,6 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("workout found: %v\n", workout)
-
-	/*
-			------------+--------------+-----------------+---------------------+
-		| workout_id | workout_name | program_name    | date                |
-		+------------+--------------+-----------------+---------------------+
-		|          1 | A            | Stronglifts 5X5 | 2022-11-19 00:00:00 |
-		+------------+--------------+-----------------+---------------------+
-		1 row in set (0.00 sec)
-
-		mysql> select * from exercise;
-		+------------+----------------+------+------+--------+
-		| workout_id | exercise_name  | sets | reps | weight |
-		+------------+----------------+------+------+--------+
-		|          1 | Deadlift       |    1 |    5 |    300 |
-		|          1 | Overhead Press |    5 |    5 |    125 |
-		|          1 | Squat          |    5 |    5 |    275 |
-		+------------+----------------+------+------+--------+
-
-	*/
 
 	wID, err := addWorkout(Workout{
 		WorkoutName: "B",
@@ -134,12 +116,14 @@ func workoutByID(id int) (Workout, error) {
 		return Workout{}, fmt.Errorf("workoutByID %q: %v", id, err)
 	}
 	row := db.QueryRow("SELECT * FROM workout WHERE workout_id = ?", id)
-	if err := row.Scan(&output.WorkoutID, &output.WorkoutName, &output.ProgramName, &output.Date, Exercises); err != nil {
+	if err := row.Scan(&output.WorkoutID, &output.WorkoutName, &output.ProgramName, &output.Date); err != nil {
 		if err == sql.ErrNoRows {
 			return output, fmt.Errorf("workoutByID %d: workout not found", id)
 		}
 		return output, fmt.Errorf("workoutByID %d: %v", id, err)
 	}
+
+	output.Exercises = append(output.Exercises, Exercises...)
 	return output, nil
 }
 
@@ -167,10 +151,10 @@ func exercisesByID(id int) ([]Exercise, error) {
 	return output, nil
 }
 
-// addWorkout adds the specified album to the database,
-// returning the album ID of the new entry
+// addWorkout adds the specified workour to the database,
+// returning the workout ID of the new entry
 func addWorkout(work Workout) (int64, error) {
-	result, err := db.Exec("INSERT INTO album (workout_name, program_name, date) VALUES (?, ?, ?, now())", work.WorkoutName, work.ProgramName)
+	result, err := db.Exec("INSERT INTO workout (workout_name, program_name, date) VALUES (?, ?, now())", work.WorkoutName, work.ProgramName)
 	if err != nil {
 		return 0, fmt.Errorf("addWorkout: %v", err)
 	}
@@ -191,7 +175,7 @@ func addWorkout(work Workout) (int64, error) {
 
 // addExercise adds the exercise to the database,
 func addExercise(ex Exercise, id int64) error {
-	_, err := db.Exec("INSERT INTO exercise (workout_id, exercise_name, sets, reps, weight) VALUES (ID, ?, ?, ?, ?)", ex.Name, ex.Sets, ex.Reps, ex.Weight)
+	_, err := db.Exec("INSERT INTO exercise (workout_id, exercise_name, sets, reps, weight) VALUES (?, ?, ?, ?, ?)", id, ex.Name, ex.Sets, ex.Reps, ex.Weight)
 	if err != nil {
 		return fmt.Errorf("addExercise: %v", err)
 	}
