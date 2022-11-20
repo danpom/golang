@@ -5,7 +5,7 @@ Home to golang code, from exercises to personal projects
 1. [Exercise Tracker](https://github.com/danpom/golang/tree/main/exercise-tracker)
 	
 	Application to log a track exercises/workouts. Built as a CRUD demo. Golang body interacting with a MySQL DB. 
-	Currently have functions to add exercises and workouts. I've hardcoded some values to test insertion. Will likely work on a building a GUI next
+	Currently have functions to add exercises and workouts. I've hardcoded some values to test insertion and retrieval. Will likely work on a building a GUI next
 
 2. [Hangman](https://github.com/danpom/golang/tree/main/hangman)
 	
