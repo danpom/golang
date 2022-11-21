@@ -4,14 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"text/template"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 var db *sql.DB
 
+//-------------workout------------------------------------
 type Exercise struct {
 	WorkoutID int64
 	Name      string
@@ -29,9 +33,13 @@ type Workout struct {
 	Exercises   []Exercise
 }
 
+//----------------HTTP---------------------------------------
+
+var tpl = template.Must(template.ParseFiles("index.html"))
+
 func main() {
 
-	// Capture connection properties.
+	// Capture DB connection properties.
 	cfg := mysql.Config{
 		User:      os.Getenv("DBUSER"),
 		Passwd:    os.Getenv("DBPASS"),
@@ -104,8 +112,30 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Exercise added: %v\n", wID)
+
+	//HTTP
+	err = godotenv.Load()
+	if err != nil {
+		log.Println("Error loading .env file")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4000"
+	}
+
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/", indexHandler)
+	http.ListenAndServe(":"+port, mux)
 }
 
+//--------------------------HTTP Funcs---------------------------------------
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.Execute(w, nil)
+}
+
+//--------------------------Workout Funcs-------------------------------
 // workoutByID queries for workouts that have the specified workout ID.
 func workoutByID(id int) (Workout, error) {
 	// A workout instance to hold data from returned rows.

@@ -18,6 +18,11 @@ CREATE TABLE et.exercise (
 );
 
 
+
+/*Test inserts 
+Hardcoded inserts to test tables
+*/
+
 INSERT INTO et.workout
   (workout_name, program_name, date)
 VALUES
