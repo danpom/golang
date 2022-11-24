@@ -23,14 +23,14 @@ CREATE TABLE et.exercise (
 Hardcoded inserts to test tables
 */
 
-INSERT INTO et.workout
-  (workout_name, program_name, date)
-VALUES
-  ('A', 'Stronglifts 5X5', now());
+-- INSERT INTO et.workout
+--   (workout_name, program_name, date)
+-- VALUES
+--   ('A', 'Stronglifts 5X5', now());
 
-INSERT INTO et.exercise
-  (workout_id, exercise_name, weight, sets, reps)
-VALUES
-  ( LAST_INSERT_ID(), 'Squat', 275, 5, 5),
-  ( LAST_INSERT_ID(), 'Overhead Press', 125, 5, 5),
-  ( LAST_INSERT_ID(), 'Deadlift', 300, 1, 5);
+-- INSERT INTO et.exercise
+--   (workout_id, exercise_name, weight, sets, reps)
+-- VALUES
+--   ( LAST_INSERT_ID(), 'Squat', 275, 5, 5),
+--   ( LAST_INSERT_ID(), 'Overhead Press', 125, 5, 5),
+--   ( LAST_INSERT_ID(), 'Deadlift', 300, 1, 5);
