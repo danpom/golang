@@ -1,4 +1,5 @@
-Chess tournement register application
+# Chess tournement register application
 
-Idea is to build a CRUD demo app which will initally just be used to chess players to register for a tournement 
+This is CRUD demo application used to manage entrants in to a chess tournamnet. It's built using GoLang and SQLite with HTML/CSS for the frontend
 
+See setup.txt for DB setup 
