@@ -29,11 +29,12 @@ func AddPlayer(name, location, rating, byes string) (int64, error) {
 }
 
 func ShowAll() []map[string]interface{} {
-	qs := "SELECT * FROM entrants"
+	qs := "SELECT * FROM entrants order by rating desc"
 	rows, err := msql.GetAllRowsByQuery(qs, db)
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return rows
 }
 
