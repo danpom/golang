@@ -1,0 +1,36 @@
+{{template "Header"}}
+{{template "Menu"}}
+
+        <div id="main-content">
+            <h2>All Records</h2>
+                            <table cellpadding="7px">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Rating</th>
+                    <th>Byes</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+           {{range .}}
+                    <tr>
+                        <td>{{.Id}}</td>
+                        <td>{{.Name}}</td>
+                        <td>{{.Location}}</td>
+                        <td>{{.Rating}}</td>
+                        <td>{{.Byes}}</td>
+                        <td>
+                            <a href='/update/{{.Id}}'>Edit</a>
+                            <a href='/delete/{{.Id}}'>Delete</a>
+                        </td>
+                    </tr>
+            {{end}}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+
+</html>

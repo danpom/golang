@@ -1,0 +1,38 @@
+{{template "Header"}}
+{{template "Menu"}}
+
+        <div id="main-content">
+            <h2>Edit Player</h2>
+            <form class="post-form" action="" method="post">
+                <div class="form-group">
+                    <label>Id</label>
+                    <input type="text" name="sid" />
+                </div>
+                <input class="submit" type="submit" name="showbtn" value="Show" />
+            </form>
+
+            <form class="post-form" action="" method="post">
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="hidden" name="sid" value="" />
+                    <input type="text" name="sname" value="" />
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="slocation" value="" />
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <input type="text" name="srating" value="" />
+                </div>
+                <div class="form-group">
+                    <label>Byes</label>
+                    <input type="text" name="sbyes" value="" />
+                </div>
+                <input class="submit" type="submit" value="Update" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

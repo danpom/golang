@@ -1,0 +1,28 @@
+go mod init chess-tournament-register
+
+go get -u github.com/gorilla/mux
+go get -u github.com/mattn/go-sqlite3
+go get -u github.com/mateors/msql
+
+-------DB------
+sudo apt install sqlite3
+
+sqlite3 tournament.db
+
+CREATE TABLE "entrants" (
+        "id"    INTEGER NOT NULL,
+        "name"  TEXT NOT NULL,
+        "location"       TEXT NOT NULL,
+        "rating"       TEXT NOT NULL,
+        "byes"       TEXT,
+        PRIMARY KEY("id")
+);
+
+
+//confirm
+.tables
+.header on
+.mode column
+pragma table_info('entrants');
+
+.exit

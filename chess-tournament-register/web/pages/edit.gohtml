@@ -1,0 +1,32 @@
+{{template "Header"}}
+{{template "Menu"}}
+        <div id="main-content">
+            <h2>Update Player</h2>
+           
+            <form class="post-form" action="/updateauth" method="post">
+            {{range .}}
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="hidden" name="sid" value="" />
+                    <input type="text" name="sname" value="{{.Name}}" />
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="slocation" value="{{.Location}}" />
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <input type="text" name="srating" value="{{.Rating}}" />
+                </div>
+                <div class="form-group">
+                    <label>Byes</label>
+                    <input type="text" name="sbyes" value="{{.Byes}}" />
+                </div>
+                <input class="submit" type="submit" value="Update" />
+                {{end}}
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
